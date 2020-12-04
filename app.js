@@ -10,7 +10,43 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const engineeringTeam = [];
 
+const memberQuestions = () =>
+    inquirer.prompt([
+    {
+      type: 'input',
+      name: 'name',
+      message: 'Name of the employee?',
+      getName() {
+        return this.name
+      }
+    },
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Employee\'s id?',
+      getName() {
+        return this.id
+      }
+    },
+    {
+      type: 'input',
+      name: 'contact',
+      message: 'Employee\'s email address?',
+      getName() {
+        return this.contact
+      }
+    },
+    
+  ])
+//   .then((data) => {
+//     const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
+
+//     fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
+//       err ? console.log(err) : console.log('Success!')
+//     );
+//   });
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
