@@ -15,6 +15,12 @@ const engineeringTeam = [];
 const memberQuestions = () =>
     inquirer.prompt([
     {
+        type: 'list',
+        name: 'role',
+        message: 'Employee\'s role on team?',
+        choices: ['Manager', 'Engineer', 'Intern', 'No new team members']
+    },
+    {
       type: 'input',
       name: 'name',
       message: 'Name of the employee?',
@@ -30,11 +36,6 @@ const memberQuestions = () =>
       message: 'Employee\'s email address?',
     },
     {
-      type: 'list',
-      name: 'role',
-      message: 'Employee\'s role on team?',
-      choices: ['Manager', 'Engineer', 'Intern']
-    }, {
       name: 'officeNumber',
       type: 'input',
       message: 'What is the Manager\'s office number?',
@@ -56,36 +57,65 @@ const memberQuestions = () =>
           return memberQuestions.role === "Intern";
       },
     },
+    {
+      name: 'confirmFinished',
+      type: 'list',
+      message: 'Are you sure you are finished adding team members?',
+      choices: ['yes', 'no'],
+      when: function(memberQuestions) {
+          return memberQuestions.role === "No new team members"
+      }
+    }
     
-  ]);
-//   .then((response) => {
-//     if (response.role === 'Manager') {
-//         addManager()
-//     }
-//   }
+ 
+  ]).then((response) => {
+    if (response.role === 'Manager') {
+        const manager = new Manager(response.name, response.email, response.id, response.officeNumber);
+        engineeringTeam.push(manager);
+        console.log(engineeringTeam);
+        memberQuestions()
 
+    }
+    else if (response.role === 'Engineer') {
+        const engineer = new Engineer(response.name, response.email, response.id, response.gitHub);
+        engineeringTeam.push(engineer);
+        console.log(engineeringTeam);
+        memberQuestions()
+    }
+    else if (response.role === 'Intern') {
+        const intern = new Intern(response.name, response.email, response.id, response.school);
+        engineeringTeam.push(intern);
+        console.log(engineeringTeam);
+        memberQuestions()
+    }
+    else if (response.confirmFinished === 'yes') {
+        console.log(engineeringTeam)
+        render()
+        //fix this.  If you say 'yes' it still asks for name, email, and id.
+    }
+    else if (response.confirmFinished === 'no') {
+        memberQuestions()
+    }
+  })
+
+  
   memberQuestions();
 
-//   .then((info) => {
-      
-//   };
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+     //DONE
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+     //Working on this one
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
 
 //There are also unit tests to help you build the classes necessary.
 
