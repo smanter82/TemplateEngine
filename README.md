@@ -35,8 +35,8 @@ For the Interns on the team, the user will also be prompted to provide:
 ##Challenges:
 
 1) I found it difficult basing inquirer prompts on the answers from other inquirer prompts.
-2) 
-3)
+2) I had trouble getting the questions to cease upon user imput that user was done adding employees.
+3) I wasn't sure how to set the code so that it would accept a Manager only once.
 
 *Remove this when finished:
 
