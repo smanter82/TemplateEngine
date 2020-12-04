@@ -30,15 +30,46 @@ const memberQuestions = () =>
       message: 'Employee\'s email address?',
     },
     {
-        type: 'list',
-        name: 'role',
-        message: 'Employee\'s role on team?',
+      type: 'list',
+      name: 'role',
+      message: 'Employee\'s role on team?',
+      choices: ['Manager', 'Engineer', 'Intern']
+    }, {
+      name: 'officeNumber',
+      type: 'input',
+      message: 'What is the Manager\'s office number?',
+      when: function(memberQuestions) {
+          return memberQuestions.role === "Manager";
       },
+    }, {
+      name:  'gitHub',
+      type: 'input', 
+      message: 'What is the Engineer\'s gitHub username?',
+      when: function(memberQuestions) {
+          return memberQuestions.role === "Engineer";
+      },
+    }, {
+      name:  'school',
+      type: 'input',
+      message: 'What school does the intern attend?',
+      when: function(memberQuestions) {
+          return memberQuestions.role === "Intern";
+      },
+    },
     
-  ])
-  .then((info) => {
+  ]);
+//   .then((response) => {
+//     if (response.role === 'Manager') {
+//         addManager()
+//     }
+//   }
+
+  memberQuestions();
+
+//   .then((info) => {
       
-  };
+//   };
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -78,3 +109,15 @@ const memberQuestions = () =>
 //   Intern.test.js
 //   Manager.test.js
 // app.js         // Runs the application
+
+// ### Roster output
+
+// The project must generate a `team.html` page in the `output` directory, that displays a nicely formatted team roster. Each team member should display the following in no particular order:
+
+//   * Name
+
+//   * Role
+
+//   * ID
+
+//   * Role-specific property (School, link to GitHub profile, or office number)
