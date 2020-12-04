@@ -18,35 +18,27 @@ const memberQuestions = () =>
       type: 'input',
       name: 'name',
       message: 'Name of the employee?',
-      getName() {
-        return this.name
-      }
     },
     {
       type: 'input',
       name: 'id',
       message: 'Employee\'s id?',
-      getName() {
-        return this.id
-      }
     },
     {
       type: 'input',
       name: 'contact',
       message: 'Employee\'s email address?',
-      getName() {
-        return this.contact
-      }
     },
+    {
+        type: 'list',
+        name: 'role',
+        message: 'Employee\'s role on team?',
+      },
     
   ])
-//   .then((data) => {
-//     const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
-
-//     fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
-//       err ? console.log(err) : console.log('Success!')
-//     );
-//   });
+  .then((info) => {
+      
+  };
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -64,8 +56,25 @@ const memberQuestions = () =>
 // information; write your code to ask different questions via inquirer depending on
 // employee type.
 
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+//There are also unit tests to help you build the classes necessary.
+
+// It is recommended that you follow this workflow:
+
+// 1. Run tests
+// 2. Create or update classes to pass a single test case
+// 3. Repeat
+
+// 🎗 Remember, you can run the tests at any time with `npm run test`
+
+// It is recommended that you start with a directory structure that looks like this:
+
+// ```
+// lib/           // classes and helper code
+// output/        // rendered output
+// templates/     // HTML template(s)
+// test/          // jest tests
+//   Employee.test.js
+//   Engineer.test.js
+//   Intern.test.js
+//   Manager.test.js
+// app.js         // Runs the application
