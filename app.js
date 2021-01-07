@@ -18,7 +18,7 @@ const memberQuestions = () =>
         type: 'list',
         name: 'role',
         message: 'Employee\'s role on team?',
-        choices: ['Manager', 'Engineer', 'Intern', 'No new team members']
+        choices: ['Manager', 'Engineer', 'Intern']
     },
     {
       type: 'input',
@@ -42,14 +42,16 @@ const memberQuestions = () =>
       when: function(memberQuestions) {
           return memberQuestions.role === "Manager";
       },
-    }, {
+    }, 
+    {
       name:  'gitHub',
       type: 'input', 
       message: 'What is the Engineer\'s gitHub username?',
       when: function(memberQuestions) {
           return memberQuestions.role === "Engineer";
       },
-    }, {
+    }, 
+    {
       name:  'school',
       type: 'input',
       message: 'What school does the intern attend?',
@@ -58,48 +60,63 @@ const memberQuestions = () =>
       },
     },
     {
-      name: 'confirmFinished',
       type: 'list',
-      message: 'Are you sure you are finished adding team members?',
-      choices: ['yes', 'no'],
-      when: function(memberQuestions) {
-          return memberQuestions.role === "No new team members"
-      }
-    }
-    
+      name: 'confirmEnd',
+      message: 'Would you like to add another team member?',
+      choices: ['Yes', 'No'],
+    },
+
  
   ]).then((response) => {
     if (response.role === 'Manager') {
-        const manager = new Manager(response.name, response.email, response.id, response.officeNumber);
+        console.log(response.id)
+        console.log(response)
+        const manager = new Manager(response.name, response.id, response.contact, response.officeNumber);
         engineeringTeam.push(manager);
         console.log(engineeringTeam);
+      if (response.confirmEnd === "Yes") {
         memberQuestions()
-
+        }
+      else if (response.confirmEnd === "No") {
+        // render(engineeringTeam)
+        writeToFile()
+      }
     }
     else if (response.role === 'Engineer') {
-        const engineer = new Engineer(response.name, response.email, response.id, response.gitHub);
+        const engineer = new Engineer(response.name, response.id, response.contact, response.gitHub);
         engineeringTeam.push(engineer);
         console.log(engineeringTeam);
-        memberQuestions()
+        if (response.confirmEnd === "Yes") {
+          memberQuestions()
+          }
+        else if (response.confirmEnd === "No") {
+          // render(engineeringTeam)
+          writeToFile()
+        }
     }
     else if (response.role === 'Intern') {
-        const intern = new Intern(response.name, response.email, response.id, response.school);
+        const intern = new Intern(response.name, response.id, response.contact, response.school);
         engineeringTeam.push(intern);
         console.log(engineeringTeam);
-        memberQuestions()
-    }
-    else if (response.confirmFinished === 'yes') {
-        console.log(engineeringTeam)
-        render()
-        //fix this.  If you say 'yes' it still asks for name, email, and id.
-    }
-    else if (response.confirmFinished === 'no') {
-        memberQuestions()
+        if (response.confirmEnd === "Yes") {
+          memberQuestions()
+          }
+        else if (response.confirmEnd === "No") {
+          // render(engineeringTeam)
+          writeToFile()
+        }
     }
   })
 
   
   memberQuestions();
+
+  function writeToFile() {
+    fs.writeFile(outputPath, render(engineeringTeam), {}, (data, err) => {
+      if (err) {
+        throw err
+      }});
+  }
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -109,13 +126,14 @@ const memberQuestions = () =>
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-     //Working on this one
+     //Done
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
+//Done
 
 //There are also unit tests to help you build the classes necessary.
 
